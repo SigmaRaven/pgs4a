@@ -17,7 +17,7 @@ class Configuration(object):
         self.layout = "internal"
         self.source = False
         self.expansion = False
-	self.targetsdk = 26
+	    self.targetsdk = 26
         
         try:
             with file(os.path.join(directory, ".android.json"), "r") as f:
