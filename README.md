@@ -1,4 +1,6 @@
 # pgs4a
+NOTE: Unchanged from the version forked from startgridsrc, assume all first-person references to that user
+
 An evolution of the deprecated Pygame Subset for Android. It's an easy way to port your Pygame to your mobile devices!
 Pgs4a was made by Tom Rothamel, Patrick Dawson and others, using Kivy's *python-for-android* packager to make Pygame games run on android.
 He developed pgs4a until 2013 until he moved on with his other projects.
