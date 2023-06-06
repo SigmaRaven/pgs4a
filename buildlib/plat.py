@@ -15,13 +15,13 @@ def set_win32_java_home():
     if "JAVA_HOME" in os.environ:
         return
 
-    import _winreg
+    import winreg
     
-    with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\JavaSoft\Java Development Kit") as jdk: #@UndefinedVariable
-        current_version, _type = _winreg.QueryValueEx(jdk, "CurrentVersion") #@UndefinedVariable
+    with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\JavaSoft\Java Development Kit") as jdk: #@UndefinedVariable
+        current_version, _type = winreg.QueryValueEx(jdk, "CurrentVersion") #@UndefinedVariable
         
-        with _winreg.OpenKey(jdk, current_version) as cv: #@UndefinedVariable
-            java_home, _type = _winreg.QueryValueEx(cv, "JavaHome") #@UndefinedVariable
+        with winreg.OpenKey(jdk, current_version) as cv: #@UndefinedVariable
+            java_home, _type = winreg.QueryValueEx(cv, "JavaHome") #@UndefinedVariable
         
         os.environ["JAVA_HOME"] = java_home 
 

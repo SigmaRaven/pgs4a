@@ -33,18 +33,18 @@ class Interface(object):
             he has read the message.
         """
 
-        print
+        print()
         self.write(prompt, Style.BRIGHT)
-        print
+        print()
 
     def success(self, prompt):
         """
         Displays `prompt` as a success message.
         """
 
-        print
+        print()
         self.write(prompt, Fore.GREEN + Style.BRIGHT)
-        print
+        print()
 
         
     def yesno(self, prompt, default=None):
@@ -52,7 +52,7 @@ class Interface(object):
         Prompts the user for a response to a yes or no question.
         """
 
-        print 
+        print() 
         self.write(prompt, Style.BRIGHT)
 
         while True:
@@ -64,7 +64,7 @@ class Interface(object):
             else:
                 prompt = "yes/no> "
         
-            choice = raw_input(prompt)
+            choice = input(prompt)
             choice = choice.strip().lower()
             
             if choice == "yes" or choice == "y":
@@ -74,7 +74,7 @@ class Interface(object):
             elif choice == "" and default is not None:
                 return default
 
-        print
+        print()
 
     def terms(self, url, prompt):
         self.info("Opening {} in a web browser.".format(url))
@@ -93,7 +93,7 @@ class Interface(object):
         empty strings are allowed. Otherwise, they are not.
         """
         
-        print
+        print()
         self.write(prompt, Style.BRIGHT)
 
         while True:
@@ -103,7 +103,7 @@ class Interface(object):
             else:
                 prompt = "> "
             
-            rv = raw_input(prompt)
+            rv = input(prompt)
             rv = rv.strip()
 
             if rv:
@@ -112,7 +112,7 @@ class Interface(object):
             if empty is not None:
                 return empty
 
-        print
+        print()
 
     def choice(self, prompt, choices, default=None):
         """
@@ -129,7 +129,7 @@ class Interface(object):
         
         default_choice = None
         
-        print
+        print()
         self.write(prompt, Style.BRIGHT)
         
         for i, (value, label) in enumerate(choices):
@@ -141,7 +141,7 @@ class Interface(object):
                 
             self.write("{}) {}".format(i, label), Style.BRIGHT)
             
-        print
+        print()
         
         if default_choice is not None:
             prompt = "1-{} [{}]> ".format(len(choices), default_choice)
@@ -150,7 +150,7 @@ class Interface(object):
         
         while True:
             try:
-                choice = raw_input(prompt).strip()
+                choice = input(prompt).strip()
                 if choice:
                     choice = int(choice)
                 else:
@@ -166,14 +166,14 @@ class Interface(object):
             if choice >= 0 and choice < len(choices):
                 return choices[choice][0]
 
-        print
+        print()
     
     def fail(self, prompt):
         """
         Causes the program to terminate with a message, and a failure code.
         """
 
-        print
+        print()
         self.write(prompt, Fore.RED + Style.BRIGHT)
 
         sys.exit(-1)

@@ -5,7 +5,7 @@ import traceback
 import os
 import zipfile
 import tarfile
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import shutil
 
 import plat
@@ -85,7 +85,7 @@ def unpack_sdk(interface):
     
     interface.info("I'm downloading the Android SDK. This might take a while.")
     
-    urllib.urlretrieve(url, archive)
+    urllib.request.urlretrieve(url, archive)
     
     interface.info("I'm extracting the Android SDK.")
     
@@ -114,7 +114,7 @@ def unpack_ant(interface):
 
     interface.info("I'm downloading Apache Ant. This might take a while.")
     
-    urllib.urlretrieve(url, archive)
+    urllib.request.urlretrieve(url, archive)
     
     interface.info("I'm extracting Apache Ant.")
 
@@ -170,10 +170,10 @@ Will you make a backup of android.keystore, and keep it in a safe place?"""):
     run(plat.keytool, "-genkey", "-keystore", "android.keystore", "-alias", "android", "-keyalg", "RSA", "-keysize", "2048", "-keypass", "android", "-storepass", "android", "-dname", dname, "-validity", "36500")
     
     f = file("local.properties", "a")
-    print >>f, "key.alias=android"
-    print >>f, "key.store.password=android"
-    print >>f, "key.alias.password=android"
-    print >>f, "key.store=android.keystore"
+    print("key.alias=android", file=f)
+    print("key.store.password=android", file=f)
+    print("key.alias.password=android", file=f)
+    print("key.store=android.keystore", file=f)
     f.close()
     
     interface.success("""I've finished creating android.keystore. Please back it up, and keep it in a safe place.""")
@@ -184,7 +184,7 @@ def install_sdk(interface):
     unpack_sdk(interface)
 
     if plat.macintosh or plat.linux:
-        os.chmod("android-sdk/tools/android", 0755)
+        os.chmod("android-sdk/tools/android", 0o755)
     
     get_packages(interface)
     generate_keys(interface)

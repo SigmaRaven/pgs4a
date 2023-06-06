@@ -23,7 +23,7 @@ from jinja2.utils import next
 try:
     from io import BytesIO
 except ImportError:
-    from StringIO import StringIO as BytesIO
+    from io import StringIO as BytesIO
 
 
 importable_object = 23
@@ -189,7 +189,7 @@ class ExtensionsTestCase(JinjaTestCase):
         original = Environment(extensions=[TestExtension])
         overlay = original.overlay()
         for env in original, overlay:
-            for ext in env.extensions.itervalues():
+            for ext in env.extensions.values():
                 assert ext.environment is env
 
     def test_preprocessor_extension(self):
@@ -245,9 +245,9 @@ class InternationalizationTestCase(JinjaTestCase):
         {% trans %}{{ users }} user{% pluralize %}{{ users }} users{% endtrans %}
         '''.encode('ascii')) # make python 3 happy
         assert list(babel_extract(source, ('gettext', 'ngettext', '_'), [], {})) == [
-            (2, 'gettext', u'Hello World', []),
-            (3, 'gettext', u'Hello World', []),
-            (4, 'ngettext', (u'%(users)s user', u'%(users)s users', None), [])
+            (2, 'gettext', 'Hello World', []),
+            (3, 'gettext', 'Hello World', []),
+            (4, 'ngettext', ('%(users)s user', '%(users)s users', None), [])
         ]
 
     def test_comment_extract(self):
@@ -260,9 +260,9 @@ class InternationalizationTestCase(JinjaTestCase):
         {% trans %}{{ users }} user{% pluralize %}{{ users }} users{% endtrans %}
         '''.encode('utf-8')) # make python 3 happy
         assert list(babel_extract(source, ('gettext', 'ngettext', '_'), ['trans', ':'], {})) == [
-            (3, 'gettext', u'Hello World', ['first']),
-            (4, 'gettext', u'Hello World', ['second']),
-            (6, 'ngettext', (u'%(users)s user', u'%(users)s users', None), ['third'])
+            (3, 'gettext', 'Hello World', ['first']),
+            (4, 'gettext', 'Hello World', ['second']),
+            (6, 'ngettext', ('%(users)s user', '%(users)s users', None), ['third'])
         ]
 
 
@@ -279,7 +279,7 @@ class AutoEscapeTestCase(JinjaTestCase):
             {{ "<HelloWorld>" }}
         ''')
         assert tmpl.render().split() == \
-            [u'&lt;HelloWorld&gt;', u'<HelloWorld>', u'&lt;HelloWorld&gt;']
+            ['&lt;HelloWorld&gt;', '<HelloWorld>', '&lt;HelloWorld&gt;']
 
         env = Environment(extensions=['jinja2.ext.autoescape'],
                           autoescape=False)
@@ -291,7 +291,7 @@ class AutoEscapeTestCase(JinjaTestCase):
             {{ "<HelloWorld>" }}
         ''')
         assert tmpl.render().split() == \
-            [u'<HelloWorld>', u'&lt;HelloWorld&gt;', u'<HelloWorld>']
+            ['<HelloWorld>', '&lt;HelloWorld&gt;', '<HelloWorld>']
 
     def test_nonvolatile(self):
         env = Environment(extensions=['jinja2.ext.autoescape'],
@@ -329,7 +329,7 @@ class AutoEscapeTestCase(JinjaTestCase):
         '''
         tmpl = env.from_string(tmplsource)
         assert tmpl.render(val=True).split()[0] == 'Markup'
-        assert tmpl.render(val=False).split()[0] == unicode.__name__
+        assert tmpl.render(val=False).split()[0] == str.__name__
 
         # looking at the source we should see <testing> there in raw
         # (and then escaped as well)
