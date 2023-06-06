@@ -1,1 +1,7 @@
 lt-maker
+android-sdk
+apache-ant
+*__pycache__
+*android-support-v4.jar
+*.zip
+*.keystore

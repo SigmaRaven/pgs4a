@@ -39,7 +39,7 @@ class test {
 }
 """
    
-    f = file("test.java", "w")
+    f = open("test.java", "w")
     f.write(SOURCE)
     f.close()
     
@@ -169,7 +169,7 @@ Will you make a backup of android.keystore, and keep it in a safe place?"""):
     
     run(plat.keytool, "-genkey", "-keystore", "android.keystore", "-alias", "android", "-keyalg", "RSA", "-keysize", "2048", "-keypass", "android", "-storepass", "android", "-dname", dname, "-validity", "36500")
     
-    f = file("local.properties", "a")
+    f = open("local.properties", "a")
     print("key.alias=android", file=f)
     print("key.store.password=android", file=f)
     print("key.alias.password=android", file=f)

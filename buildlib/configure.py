@@ -17,10 +17,10 @@ class Configuration(object):
         self.layout = "internal"
         self.source = False
         self.expansion = False
-	    self.targetsdk = 26
+        self.targetsdk = 26
         
         try:
-            with file(os.path.join(directory, ".android.json"), "r") as f:
+            with open(os.path.join(directory, ".android.json"), "r") as f:
                 d = json.load(f)
             
             self.__dict__.update(d)            
@@ -29,7 +29,7 @@ class Configuration(object):
         
     def save(self, directory):
 
-        with file(os.path.join(directory, ".android.json"), "w") as f:
+        with open(os.path.join(directory, ".android.json"), "w") as f:
             json.dump(self.__dict__, f)
 
 def set_version(config, value):
